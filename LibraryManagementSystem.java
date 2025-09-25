@@ -1,21 +1,39 @@
 import java.io.*;
 import java.util.*;
+
 class Book implements Serializable {
     private int id;
     private String title;
     private String author;
     private boolean available;
+
     public Book(int id, String title, String author, boolean available) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.available = available;
     }
-    public int getId() { return id; }
-    public String getTitle() { return title; }
-    public String getAuthor() { return author; }
-    public boolean isAvailable() { return available; }
-    public void setAvailable(boolean available) { this.available = available; }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
         return String.format("ID: %d | Title: %s | Author: %s | Available: %s",
@@ -25,13 +43,16 @@ class Book implements Serializable {
 
 class Library {
     private List<Book> books;
+
     public Library() {
         books = new ArrayList<>();
     }
+
     public void addBook(Book book) {
         books.add(book);
         System.out.println("Book added successfully.");
     }
+
     public void deleteBook(int id) {
         boolean removed = books.removeIf(book -> book.getId() == id);
         if (removed) {
@@ -40,6 +61,7 @@ class Library {
             System.out.println("Book not found.");
         }
     }
+
     public void searchBook(String keyword) {
         boolean found = false;
         for (Book book : books) {
@@ -53,6 +75,7 @@ class Library {
             System.out.println("No matching book found.");
         }
     }
+
     public void displayBooks() {
         if (books.isEmpty()) {
             System.out.println("No books in the library.");
@@ -62,6 +85,7 @@ class Library {
             }
         }
     }
+
     public void saveToFile(String filename) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(books);
@@ -70,6 +94,7 @@ class Library {
             System.out.println("Error saving to file: " + e.getMessage());
         }
     }
+
     public void loadFromFile(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             books = (List<Book>) ois.readObject();
@@ -79,6 +104,7 @@ class Library {
         }
     }
 }
+
 public class LibraryManagementSystem {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
